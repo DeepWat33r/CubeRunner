@@ -10,7 +10,7 @@ public class CubeStacking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddCube();
+        
     }
 
     // Update is called once per frame
@@ -25,4 +25,5 @@ public class CubeStacking : MonoBehaviour
         newCube.transform.parent = this.transform;
         cubeSpawnPoint.position += new Vector3(0, newCube.transform.localScale.y, 0);
     }
+
 }
