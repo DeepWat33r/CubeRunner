@@ -1,0 +1,4 @@
+repository "CubeRunner@DeepWat3r@cloud"
+  path "/"
+    br "/main"
+    co "/main"
