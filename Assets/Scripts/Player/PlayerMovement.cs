@@ -5,7 +5,8 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 5.0f;
+    //public float speed { get; private set; } = 5.0f;
+    [SerializeField] public float speed = 5.0f;
     [SerializeField] private float sideMovingDistance = 2.0f;
     [SerializeField] private float sideMovingSpeed = 2.0f;
     private int _maxSideMovingCount = 2;

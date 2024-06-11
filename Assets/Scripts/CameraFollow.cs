@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject player; // Attach the player GameObject
-    private Vector3 cameraInitialPosition;
-    private float initialPlayerZ;
+    public GameObject player;
+    private float playerSpeed;
 
     void Start()
     {
-        // Initialize camera and player positions
-        cameraInitialPosition = transform.position;
-        initialPlayerZ = player.transform.position.z;
+        playerSpeed = player.GetComponent<PlayerMovement>().speed;
     }
 
     void Update()
     {
-        // Calculate the new z position based on the player's movement
-        float zMovement = player.transform.position.z - initialPlayerZ;
-        transform.position = new Vector3(cameraInitialPosition.x, cameraInitialPosition.y, cameraInitialPosition.z + zMovement);
+        transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime, Space.World);
     }
 }
 
