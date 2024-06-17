@@ -559,6 +559,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 490677120}
+  - component: {fileID: 490677121}
   m_Layer: 0
   m_Name: CubeStack
   m_TagString: Untagged
@@ -583,6 +584,20 @@ Transform:
   - {fileID: 2040451640}
   m_Father: {fileID: 1656355047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &490677121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490677119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb3b58955f6b1c48834d6131ed50e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 3242987439024661385, guid: 784c1326acf87e943aa510c44ad2f0cf, type: 3}
+  cubeSpawnPoint: {fileID: 2040451640}
 --- !u!1001 &517006947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1631,11 +1646,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1656355047}
-  - component: {fileID: 1656355049}
   - component: {fileID: 1656355050}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1657,20 +1671,6 @@ Transform:
   - {fileID: 490677120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1656355049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656355046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beb3b58955f6b1c48834d6131ed50e58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 3242987439024661385, guid: 784c1326acf87e943aa510c44ad2f0cf, type: 3}
-  cubeSpawnPoint: {fileID: 2040451640}
 --- !u!114 &1656355050
 MonoBehaviour:
   m_ObjectHideFlags: 0
