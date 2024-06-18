@@ -5,13 +5,24 @@ using UnityEngine;
 
 public class CubeCollisionHandler : MonoBehaviour
 {
-    public Collider interactionCollider;
+    public float jumpForce = 30;
+    private Collider _interactionCollider;
+    private Rigidbody _cubeRigidbody;
+    public event Action<GameObject, GameObject> OnCubeCollision; 
+    public void Start()
+    {
+        CubeController cubeController = GetComponent<CubeController>();
+        _cubeRigidbody = GetComponent<Rigidbody>();
+        if(cubeController!= null) _interactionCollider = cubeController.interactionCollider;
+
+    }
     public void OnCollisionEnter(Collision other)
     {
-        if(other.contacts[0].thisCollider == interactionCollider && other.gameObject.CompareTag("Cube"))
+        if(other.contacts[0].thisCollider == _interactionCollider && other.gameObject.CompareTag("Cube"))
         {
             Debug.Log("Collision Detected");
-            Destroy(other.gameObject);
+            OnCubeCollision?.Invoke(other.gameObject, this.gameObject);
         }
     }
+    
 }

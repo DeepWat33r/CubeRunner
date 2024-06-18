@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class CubeController : MonoBehaviour
 {
     public Collider interactionCollider;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +16,7 @@ public class CubeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.parent.parent != null && transform.parent.parent.CompareTag("Player"))
+        if(transform.parent != null && transform.parent.CompareTag("Player"))
         {
             interactionCollider.enabled = true;
         }

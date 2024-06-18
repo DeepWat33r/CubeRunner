@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float sideMovingSpeed = 2.0f;
     private int _maxSideMovingCount = 2;
     private int _currentSideMovingCount = 0;
-    private bool isMovingSideways = false;
+    private bool _isMovingSideways = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-        if (!isMovingSideways)
+        if (!_isMovingSideways)
         {
             if (Input.GetKeyDown(KeyCode.A) && _currentSideMovingCount > -_maxSideMovingCount)
             {
@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator SideMove(Vector3 direction)
     {
-        isMovingSideways = true;
+        _isMovingSideways = true;
         float startTime = Time.time;
         Vector3 startPos = transform.position;
         Vector3 endPos = startPos + direction * sideMovingDistance;
@@ -50,6 +50,6 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        isMovingSideways = false;
+        _isMovingSideways = false;
     }
 }
