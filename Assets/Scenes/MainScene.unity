@@ -1640,6 +1640,9 @@ MonoBehaviour:
   speed: 5
   sideMovingDistance: 2
   sideMovingSpeed: 10
+  upwardMoveDistance: 2.5
+  upwardMoveSpeed: 10
+  _maxSideMovingCount: 2
 --- !u!114 &1656355051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1653,10 +1656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 3242987439024661385, guid: 784c1326acf87e943aa510c44ad2f0cf, type: 3}
-  player: {fileID: 1656355046}
   cubeSpawnPoint: {fileID: 2040451640}
-  moveDistance: 2
-  moveSpeed: 1
 --- !u!1001 &1664245265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1897,7 +1897,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717613467}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1914,7 +1914,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1001 &1794009085
 PrefabInstance:

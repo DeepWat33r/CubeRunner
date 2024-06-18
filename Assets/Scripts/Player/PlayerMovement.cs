@@ -1,55 +1,77 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cubes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class PlayerMovement : MonoBehaviour
+namespace Player
 {
-    //public float speed { get; private set; } = 5.0f;
-    [SerializeField] public float speed = 5.0f;
-    [SerializeField] private float sideMovingDistance = 2.0f;
-    [SerializeField] private float sideMovingSpeed = 2.0f;
-    private int _maxSideMovingCount = 2;
-    private int _currentSideMovingCount = 0;
-    private bool _isMovingSideways = false;
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerMovement : MonoBehaviour
     {
-        
-    }
+        public float speed = 5.0f; // Forward movement speed
+        public int maxSideMovingCount = 2;
+        [SerializeField] private float sideMovingDistance = 2.0f; // Maximum side movement distance
+        [SerializeField] private float sideMovingSpeed = 2.0f; // Speed of side movement
+        [SerializeField] private float upwardMoveDistance = 3f; // Height of upward movement
+        [SerializeField] private float upwardMoveSpeed = 10f;
+        private float _sideMoveInput = 0f; // Input for side movement
+        private float _sideTargetPositionX = 0f; // Target X position for side movement
+        private bool _isMovingUpward = false; // Flag for upward movement
+        private float _initialY; // Initial Y position for upward movement
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-        if (!_isMovingSideways)
+        void Start()
         {
-            if (Input.GetKeyDown(KeyCode.A) && _currentSideMovingCount > -_maxSideMovingCount)
+            CubeStack cubeStack = GetComponentInParent<CubeStack>();
+            if (cubeStack != null)
             {
-                StartCoroutine(SideMove(Vector3.left));
-                _currentSideMovingCount--;
+                cubeStack.TriggerUpwardMovement += TriggerUpwardMove;
             }
-            else if (Input.GetKeyDown(KeyCode.D) && _currentSideMovingCount < _maxSideMovingCount)
-            {
-                StartCoroutine(SideMove(Vector3.right));
-                _currentSideMovingCount++;
-            }
-        }
-    }
-    IEnumerator SideMove(Vector3 direction)
-    {
-        _isMovingSideways = true;
-        float startTime = Time.time;
-        Vector3 startPos = transform.position;
-        Vector3 endPos = startPos + direction * sideMovingDistance;
-
-        while (Time.time < startTime + 1f / sideMovingSpeed)
-        {
-            transform.position = Vector3.Lerp(startPos, endPos, (Time.time - startTime) * sideMovingSpeed) + Vector3.forward * speed * (Time.time - startTime);
-            yield return null;
+            _sideTargetPositionX = transform.position.x;
+            _initialY = transform.position.y;
         }
 
-        _isMovingSideways = false;
+        void Update()
+        {
+            // Handle forward movement
+            transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
+
+            // Handle side movement input
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                _sideMoveInput = -1; // Move left
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                _sideMoveInput = 1; // Move right
+            }
+
+            // Update side target position based on input
+            if (_sideMoveInput != 0)
+            {
+                float newTargetX = transform.position.x + _sideMoveInput * sideMovingDistance;
+                _sideTargetPositionX = Mathf.Clamp(newTargetX, -maxSideMovingCount * sideMovingDistance, maxSideMovingCount * sideMovingDistance);
+                _sideMoveInput = 0; // Reset input
+            }
+            // Smoothly move to the target side position
+            Vector3 currentPosition = transform.position;
+            Vector3 targetPosition = new Vector3(_sideTargetPositionX, currentPosition.y, currentPosition.z);
+            transform.position = Vector3.MoveTowards(currentPosition, targetPosition, sideMovingSpeed * Time.deltaTime);
+
+            // Handle upward movement
+            if (_isMovingUpward)
+            {
+                Vector3 upwardPosition = new Vector3(transform.position.x, _initialY + upwardMoveDistance, transform.position.z);
+                transform.position = Vector3.MoveTowards(transform.position, upwardPosition, upwardMoveSpeed * Time.deltaTime);
+
+                // Check if reached the target height
+                if (Mathf.Abs(transform.position.y - (_initialY + upwardMoveDistance)) < 0.01f)
+                {
+                    _isMovingUpward = false; // Stop upward movement
+                }
+            }
+        }
+
+        private void TriggerUpwardMove()
+        {
+            _isMovingUpward = true; // Start upward movement
+            _initialY = transform.position.y; // Reset initial Y
+        }
     }
 }
