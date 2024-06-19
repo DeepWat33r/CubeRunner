@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Player;
 using UnityEngine;
 
@@ -18,11 +19,7 @@ namespace Cubes
             {
                 playerMovement.OnFinishJump += AddCube;
             }
-            CubeCollisionHandler[] handlers = GetComponentsInChildren<CubeCollisionHandler>();
-            foreach (CubeCollisionHandler handler in handlers)
-            {
-                handler.OnCubeCollision += CubeToAdd;
-            }
+            UpdateCubeSubscriptions();
         }
     
         void Update()
@@ -33,6 +30,11 @@ namespace Cubes
         {
             Destroy(collideCube);
             TriggerUpwardMovement?.Invoke();
+        }
+        private void CubeToRemove(GameObject cube)
+        {
+            cube.transform.SetParent(null);
+            StartCoroutine(DestroyCube(cube));
         }
         private void AddCube()
         {
@@ -51,7 +53,14 @@ namespace Cubes
                 // First unsubscribe to avoid multiple subscriptions if already subscribed
                 handler.OnCubeCollision -= CubeToAdd;
                 handler.OnCubeCollision += CubeToAdd;
+                handler.OnWallCollision -= CubeToRemove;
+                handler.OnWallCollision += CubeToRemove;
             }
+        }
+        IEnumerator DestroyCube(GameObject cube)
+        {
+            yield return new WaitForSeconds(3);
+            Destroy(cube);
         }
     }
 }
