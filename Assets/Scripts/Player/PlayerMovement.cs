@@ -1,3 +1,4 @@
+using System;
 using Cubes;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         public float speed = 5.0f; // Forward movement speed
-        public int maxSideMovingCount = 2;
+        [SerializeField]private int maxSideMovingCount = 2;
         [SerializeField] private float sideMovingDistance = 2.0f; // Maximum side movement distance
         [SerializeField] private float sideMovingSpeed = 2.0f; // Speed of side movement
         [SerializeField] private float upwardMoveDistance = 3f; // Height of upward movement
@@ -16,9 +17,10 @@ namespace Player
         private bool _isMovingUpward = false; // Flag for upward movement
         private float _initialY; // Initial Y position for upward movement
 
+        public event Action OnFinishJump;
         void Start()
         {
-            CubeStack cubeStack = GetComponentInParent<CubeStack>();
+            CubeStack cubeStack = GetComponent<CubeStack>();
             if (cubeStack != null)
             {
                 cubeStack.TriggerUpwardMovement += TriggerUpwardMove;
@@ -64,6 +66,7 @@ namespace Player
                 if (Mathf.Abs(transform.position.y - (_initialY + upwardMoveDistance)) < 0.01f)
                 {
                     _isMovingUpward = false; // Stop upward movement
+                    OnFinishJump?.Invoke();
                 }
             }
         }

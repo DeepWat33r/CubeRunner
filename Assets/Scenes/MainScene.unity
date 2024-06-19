@@ -1638,11 +1638,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  maxSideMovingCount: 2
   sideMovingDistance: 2
   sideMovingSpeed: 10
-  upwardMoveDistance: 2.5
+  upwardMoveDistance: 3
   upwardMoveSpeed: 10
-  _maxSideMovingCount: 2
 --- !u!114 &1656355051
 MonoBehaviour:
   m_ObjectHideFlags: 0

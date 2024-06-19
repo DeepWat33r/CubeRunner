@@ -214,4 +214,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ffb0115c9674346a9dc0d4ce3ee6e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionCollider: {fileID: 1028376758387621570}

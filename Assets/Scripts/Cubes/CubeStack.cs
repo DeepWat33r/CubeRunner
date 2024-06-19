@@ -1,4 +1,5 @@
 using System;
+using Player;
 using UnityEngine;
 
 namespace Cubes
@@ -12,6 +13,11 @@ namespace Cubes
 
         void Start()
         {
+            PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.OnFinishJump += AddCube;
+            }
             CubeCollisionHandler[] handlers = GetComponentsInChildren<CubeCollisionHandler>();
             foreach (CubeCollisionHandler handler in handlers)
             {
@@ -27,11 +33,25 @@ namespace Cubes
         {
             Destroy(collideCube);
             TriggerUpwardMovement?.Invoke();
-            AddCube();
         }
         private void AddCube()
         {
-            Debug.Log("Adding Cube");
+            Vector3 spawnPosition = new Vector3(transform.position.x, 1, transform.position.z);
+            GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
+            newCube.transform.SetParent(transform);
+            UpdateCubeSubscriptions();
+            Debug.Log("Cube Added");
+        }
+        private void UpdateCubeSubscriptions()
+        {
+            // Find all CubeCollisionHandlers and subscribe them to the CubeToAdd
+            CubeCollisionHandler[] handlers = GetComponentsInChildren<CubeCollisionHandler>();
+            foreach (CubeCollisionHandler handler in handlers)
+            {
+                // First unsubscribe to avoid multiple subscriptions if already subscribed
+                handler.OnCubeCollision -= CubeToAdd;
+                handler.OnCubeCollision += CubeToAdd;
+            }
         }
     }
 }

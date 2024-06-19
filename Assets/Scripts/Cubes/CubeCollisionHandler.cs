@@ -5,7 +5,6 @@ namespace Cubes
 {
     public class CubeCollisionHandler : MonoBehaviour
     {
-        public float jumpForce = 30;
         private Collider _interactionCollider;
         public event Action<GameObject, GameObject> OnCubeCollision; 
         public void Start()
