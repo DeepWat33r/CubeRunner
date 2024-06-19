@@ -12,9 +12,9 @@ namespace Player
         [SerializeField] private float sideMovingSpeed = 2.0f; // Speed of side movement
         [SerializeField] private float upwardMoveDistance = 3f; // Height of upward movement
         [SerializeField] private float upwardMoveSpeed = 10f;
-        private float _sideMoveInput = 0f; // Input for side movement
-        private float _sideTargetPositionX = 0f; // Target X position for side movement
-        private bool _isMovingUpward = false; // Flag for upward movement
+        private float _sideMoveInput; // Input for side movement
+        private float _sideTargetPositionX; // Target X position for side movement
+        private bool _isMovingUpward; // Flag for upward movement
         private float _initialY; // Initial Y position for upward movement
 
         public event Action OnFinishJump;
@@ -32,7 +32,7 @@ namespace Player
         void Update()
         {
             // Handle forward movement
-            transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.forward * (speed * Time.deltaTime), Space.World);
 
             // Handle side movement input
             if (Input.GetKeyDown(KeyCode.A))

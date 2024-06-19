@@ -8,9 +8,8 @@ namespace Cubes
     public class CubeStack : MonoBehaviour
     {
         public GameObject cubePrefab;
-        public Transform cubeSpawnPoint;
         public event Action TriggerUpwardMovement;  // Event to trigger upward movement
-    
+        public event Action ScoreUpdate;  // Event to update score
 
         void Start()
         {
@@ -30,10 +29,12 @@ namespace Cubes
         {
             Destroy(collideCube);
             TriggerUpwardMovement?.Invoke();
+            ScoreUpdate?.Invoke();
         }
         private void CubeToRemove(GameObject cube)
         {
             cube.transform.SetParent(null);
+            AllignCubes();
             StartCoroutine(DestroyCube(cube));
         }
         private void AddCube()
@@ -42,6 +43,7 @@ namespace Cubes
             GameObject newCube = Instantiate(cubePrefab, spawnPosition, Quaternion.identity);
             newCube.transform.SetParent(transform);
             UpdateCubeSubscriptions();
+            AllignCubes();
             Debug.Log("Cube Added");
         }
         private void UpdateCubeSubscriptions()
@@ -55,6 +57,15 @@ namespace Cubes
                 handler.OnCubeCollision += CubeToAdd;
                 handler.OnWallCollision -= CubeToRemove;
                 handler.OnWallCollision += CubeToRemove;
+            }
+        }
+
+        private void AllignCubes()
+        {
+            foreach (Transform child in transform)
+            {
+                Vector3 allignedPosition = new Vector3(transform.position.x, child.position.y, transform.position.z);
+                child.position = allignedPosition;
             }
         }
         IEnumerator DestroyCube(GameObject cube)
