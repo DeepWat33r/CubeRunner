@@ -17,11 +17,6 @@ namespace UI
             if(playerController!=null) playerController.ScoreUpdate += UpdateScore;
             scoreText.text = _playerScore.ToString();
         }
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
         private void UpdateScore()
         {
             _playerScore++;

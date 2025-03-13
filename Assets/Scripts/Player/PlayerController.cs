@@ -8,7 +8,6 @@ namespace Player
     {
         public int score;
         public event Action ScoreUpdate;
-        // Start is called before the first frame update
         void Start()
         {
             score = 0;
@@ -19,7 +18,6 @@ namespace Player
             }
         }
 
-        // Update is called once per frame
         void Update()
         {
         

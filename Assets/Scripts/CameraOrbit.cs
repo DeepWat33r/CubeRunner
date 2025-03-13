@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class CameraOrbit : MonoBehaviour
 {
-    public Transform target; // Target to orbit around
-    public float distance = 5.0f; // Distance from the target
-    public float rotationSpeed = 50.0f; // Speed of rotation around the target
-    public float tiltAngle = 30.0f; // Angle to tilt the camera downward
-    public float initialAngle; // Initial angle for the camera position around the target
+    public Transform target; 
+    public float distance = 5.0f; 
+    public float rotationSpeed = 50.0f; 
+    public float tiltAngle = 30.0f; 
+    public float initialAngle; 
 
     void Start()
     {
         if (target != null)
         {
-            // Set the initial position of the camera
             UpdateCameraPosition(initialAngle);
         }
     }
@@ -23,7 +22,6 @@ public class CameraOrbit : MonoBehaviour
     {
         if (target != null)
         {
-            // Incrementally update the camera's rotation
             initialAngle += rotationSpeed * Time.deltaTime;
             UpdateCameraPosition(initialAngle);
         }

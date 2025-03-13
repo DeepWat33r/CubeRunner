@@ -20,11 +20,6 @@ namespace Cubes
             }
             UpdateCubeSubscriptions();
         }
-    
-        void Update()
-        {
-        
-        }
         private void CubeToAdd(GameObject collideCube, GameObject thisCube)
         {
             Destroy(collideCube);
@@ -48,11 +43,9 @@ namespace Cubes
         }
         private void UpdateCubeSubscriptions()
         {
-            // Find all CubeCollisionHandlers and subscribe them to the CubeToAdd
             CubeCollisionHandler[] handlers = GetComponentsInChildren<CubeCollisionHandler>();
             foreach (CubeCollisionHandler handler in handlers)
             {
-                // First unsubscribe to avoid multiple subscriptions if already subscribed
                 handler.OnCubeCollision -= CubeToAdd;
                 handler.OnCubeCollision += CubeToAdd;
                 handler.OnWallCollision -= CubeToRemove;
