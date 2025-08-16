@@ -35,7 +35,7 @@ namespace Player
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                _sideMoveInput = -1; // Move left
+                _sideMoveInput = -1;
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {

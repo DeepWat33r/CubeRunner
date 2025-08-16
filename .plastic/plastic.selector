@@ -1,4 +1,4 @@
-repository "CubeRunner@DeepWat3r@cloud"
+repository "Cloud Repositories/CubeRunner@7971753877583@cloud"
   path "/"
     br "/main"
     co "/main"
